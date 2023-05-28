@@ -8,12 +8,15 @@ import World from './World/World';
 
 const main = () => {
   // get reference to #app div element
-  const app = document.querySelector('#app');
+  const app = document.createElement('div');
+  app.id = 'app';
   // Create #canvasHolder div element
   const canvasHolder = document.createElement('div');
   canvasHolder.id = 'canvasHolder';
   // nest canvasHolder inside of #app div
   app?.appendChild(canvasHolder);
+
+  document.body.appendChild(app);
 
   // create World
   const world = new World(canvasHolder);
