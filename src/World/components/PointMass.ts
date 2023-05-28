@@ -5,10 +5,10 @@ import { BufferGeometry, Material, Mesh, Vector3 } from 'three';
  * @author Ryan Milligan
  * @date 26/05/2023
  * @export
- * @class PointMass
+ * @class RigidBody
  * @extends {Mesh}
  */
-export default class PointMass extends Mesh {
+export default class RigidBody extends Mesh {
   velocity: Vector3;
 
   acceleration: Vector3;
@@ -16,7 +16,7 @@ export default class PointMass extends Mesh {
   mass: number;
 
   /**
-   * Creates an instance of PointMass.
+   * Creates an instance of RigidBody.
    * @author Ryan Milligan
    * @date 26/05/2023
    * @param {BufferGeometry} geometry
@@ -26,7 +26,7 @@ export default class PointMass extends Mesh {
    *       acceleration?: Vector3;
    *       mass?: number;
    *     }} [options]
-   * @memberof PointMass
+   * @memberof RigidBody
    */
   constructor(
     geometry: BufferGeometry,
@@ -49,7 +49,7 @@ export default class PointMass extends Mesh {
    * @author Ryan Milligan
    * @date 26/05/2023
    * @param {number} deltaTime
-   * @memberof PointMass
+   * @memberof RigidBody
    */
   updatePosition(deltaTime: number) {
     this.position.addScaledVector(this.velocity, deltaTime);
@@ -60,7 +60,7 @@ export default class PointMass extends Mesh {
    * @author Ryan Milligan
    * @date 26/05/2023
    * @param {number} deltaTime
-   * @memberof PointMass
+   * @memberof RigidBody
    */
   updateVelocity(deltaTime: number) {
     this.velocity.addScaledVector(this.acceleration, deltaTime);
