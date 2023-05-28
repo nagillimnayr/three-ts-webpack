@@ -4,7 +4,7 @@ import createCamera from './components/camera';
 import createRenderer from './systems/renderer';
 import createScene from './components/scene';
 import createCube from './components/cube';
-import resizeCanvas from '../utils/canvas';
+import resizeCanvas from './utils/canvas';
 
 export default class World {
   camera: PerspectiveCamera;
