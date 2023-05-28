@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   mode: 'development',
   entry: {
-    app: './src/index.ts',
+    app: './src/main.ts',
   },
   devtool: 'inline-source-map',
   devServer: {
@@ -13,7 +13,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Development',
+      title: 'Three.js + TS + Webpack',
     }),
   ],
   module: {
