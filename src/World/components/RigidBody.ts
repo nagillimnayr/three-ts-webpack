@@ -9,11 +9,11 @@ import { BufferGeometry, Material, Mesh, Vector3 } from 'three';
  * @extends {Mesh}
  */
 export default class RigidBody extends Mesh {
-  velocity: Vector3;
+  private velocity: Vector3;
 
-  acceleration: Vector3;
+  private acceleration: Vector3;
 
-  mass: number;
+  private mass: number;
 
   /**
    * Creates an instance of RigidBody.

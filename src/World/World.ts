@@ -1,10 +1,11 @@
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { Color, PerspectiveCamera, Scene, WebGLRenderer } from 'three';
+import { Clock, Color, PerspectiveCamera, Scene, WebGLRenderer } from 'three';
 import createCamera from './components/camera';
 import createRenderer from './systems/renderer';
 import createScene from './components/scene';
 import createCube from './components/cube';
 import resizeCanvas from './utils/canvas';
+import createClock from './systems/clock';
 
 export default class World {
   camera: PerspectiveCamera;
@@ -13,6 +14,8 @@ export default class World {
 
   scene: Scene;
 
+  clock: Clock;
+
   controls: OrbitControls;
 
   constructor(container: HTMLElement | HTMLDivElement) {
@@ -20,6 +23,7 @@ export default class World {
     this.camera = createCamera();
     this.renderer = createRenderer();
     this.scene = createScene();
+    this.clock = createClock();
 
     // Attach canvas to container
     container.appendChild(this.renderer.domElement);
@@ -38,6 +42,9 @@ export default class World {
   }
 
   render() {
+    // update all of the bodies in the simulation
+    const deltaTime = this.clock.getDelta() * 0.001; // Convert to seconds
+
     // render a frame
     this.renderer.render(this.scene, this.camera);
   }
