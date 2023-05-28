@@ -2,8 +2,8 @@ import { Vector3 } from 'three';
 import { DIST_MULT, GRAV_CONST, SOLAR_MASS } from '../../utils/constants';
 
 interface PointMass {
-  mass: number;
-  position: Vector3;
+  readonly mass: number;
+  readonly position: Vector3;
 }
 
 export default function calculateGravitation(
