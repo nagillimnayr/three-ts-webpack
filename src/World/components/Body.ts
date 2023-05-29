@@ -52,7 +52,7 @@ export default class Body extends Mesh implements PointMass {
     return this._acceleration;
   }
   get mass(): number {
-    return this.mass;
+    return this._mass;
   }
 
   set velocity(newVelocity: Vector3) {

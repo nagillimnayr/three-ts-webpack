@@ -29,6 +29,7 @@ export default class World {
   clock: Clock;
 
   controls: OrbitControls;
+  timeScale: number;
 
   constructor(container: HTMLElement | HTMLDivElement) {
     // Create components
@@ -36,6 +37,7 @@ export default class World {
     this.renderer = createRenderer();
     this.scene = createScene();
     this.clock = createClock();
+    this.timeScale = 20;
 
     // Attach canvas to container
     container.appendChild(this.renderer.domElement);
@@ -73,10 +75,13 @@ export default class World {
 
   render() {
     // get time since last update
-    const deltaTime = this.clock.getDelta() * 0.001; // Convert to seconds
+    const deltaTime = this.clock.getDelta();
 
     // update all of the bodies in the simulation
-    inOrderTraversal(this.scene.children[0] as Body, deltaTime);
+    inOrderTraversal(
+      this.scene.children[0] as Body,
+      deltaTime * this.timeScale
+    );
 
     // render a frame
     this.renderer.render(this.scene, this.camera);
