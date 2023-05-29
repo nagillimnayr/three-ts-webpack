@@ -12,12 +12,13 @@ import {
 import createCamera from './components/camera';
 import createRenderer from './systems/renderer';
 import createScene from './components/scene';
-import createCube from './components/cube';
 import resizeCanvas from './utils/canvas';
 import createClock from './systems/clock';
 import Body from './components/Body';
-import { DIST_MULT, KM_TO_M } from './utils/constants';
+import { DAY, DIST_MULT, KM_TO_M } from './utils/constants';
 import inOrderTraversal from './utils/treeTraversal';
+import Stats from 'three/examples/jsm/libs/stats.module';
+import { GUI } from 'dat.gui';
 
 export default class World {
   camera: PerspectiveCamera;
@@ -29,6 +30,8 @@ export default class World {
   clock: Clock;
 
   controls: OrbitControls;
+  stats: Stats;
+  gui: GUI;
   timeScale: number;
 
   constructor(container: HTMLElement | HTMLDivElement) {
@@ -37,6 +40,8 @@ export default class World {
     this.renderer = createRenderer();
     this.scene = createScene();
     this.clock = createClock();
+    this.stats = new Stats();
+    this.gui = new GUI();
     this.timeScale = 20;
 
     // Attach canvas to container
@@ -60,7 +65,7 @@ export default class World {
       velocity: new Vector3(0, 0, (-30 * KM_TO_M) / DIST_MULT), // 30km/s
     });
     earth.position.set(14.95, 0, 0);
-    earth.scale.set(0.2, 0.2, 0.2);
+    earth.scale.set(0.3, 0.3, 0.3);
     sun.add(earth); // attach earth to sun
     this.scene.add(sun);
 
@@ -71,19 +76,26 @@ export default class World {
 
     // Adjust canvas size to be in line with it's display size
     resizeCanvas(this.renderer);
+
+    this.renderer.domElement.parentElement.appendChild(this.stats.dom);
+
+    const earthFolder = this.gui.addFolder('earth');
+    earthFolder.add(earth.position, 'x', -20, 20, 0.0001);
+    earthFolder.add(earth.position, 'y', -20, 20, 0.0001);
+    earthFolder.add(earth.position, 'z', -20, 20, 0.0001);
+    earthFolder.open();
   }
 
   render() {
     // get time since last update
-    const deltaTime = this.clock.getDelta();
+    const deltaTime = this.clock.getDelta() * this.timeScale * DAY;
 
     // update all of the bodies in the simulation
-    inOrderTraversal(
-      this.scene.children[0] as Body,
-      deltaTime * this.timeScale
-    );
+    inOrderTraversal(this.scene.children[0] as Body, deltaTime);
 
     // render a frame
     this.renderer.render(this.scene, this.camera);
+
+    this.stats.update();
   }
 }

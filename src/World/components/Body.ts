@@ -40,9 +40,9 @@ export default class Body extends Mesh implements PointMass {
   ) {
     super(geometry, material);
 
-    this.velocity = options?.velocity ?? new Vector3(0, 0, 0);
-    this.acceleration = options?.acceleration ?? new Vector3(0, 0, 0);
-    this.mass = options?.mass ?? 0;
+    this._velocity = options?.velocity ?? new Vector3(0, 0, 0);
+    this._acceleration = options?.acceleration ?? new Vector3(0, 0, 0);
+    this._mass = options?.mass ?? 0;
   }
 
   get velocity(): Vector3 {

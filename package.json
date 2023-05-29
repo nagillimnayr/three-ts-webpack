@@ -55,6 +55,7 @@
     }
   },
   "dependencies": {
+    "@types/dat.gui": "^0.7.7",
     "@types/three": "^0.152.1",
     "dat.gui": "^0.7.9",
     "maath": "^0.6.0",
