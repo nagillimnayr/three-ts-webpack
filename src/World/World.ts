@@ -1,11 +1,20 @@
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { Clock, Color, PerspectiveCamera, Scene, WebGLRenderer } from 'three';
+import {
+  Clock,
+  Color,
+  MeshBasicMaterial,
+  PerspectiveCamera,
+  Scene,
+  SphereGeometry,
+  WebGLRenderer,
+} from 'three';
 import createCamera from './components/camera';
 import createRenderer from './systems/renderer';
 import createScene from './components/scene';
 import createCube from './components/cube';
 import resizeCanvas from './utils/canvas';
 import createClock from './systems/clock';
+import Body from './components/Body';
 
 export default class World {
   camera: PerspectiveCamera;
@@ -29,8 +38,14 @@ export default class World {
     container.appendChild(this.renderer.domElement);
 
     // create cube
-    const cube = createCube(new Color(0xf8333c)); // color: imperial red
-    this.scene.add(cube);
+    // const cube = createCube(new Color(0xf8333c)); // color: imperial red
+    // this.scene.add(cube);
+    const sphereGeometry = new SphereGeometry(1, 32, 32);
+    const sphereMaterial1 = new MeshBasicMaterial({
+      color: 0xfdee00, // color: Aureolin
+    });
+    const sun = new Body(sphereGeometry, sphereMaterial1);
+    this.scene.add(sun);
 
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     // controls.update() must be called after any manual changes to the camera's transform
