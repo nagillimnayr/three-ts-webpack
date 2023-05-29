@@ -9,11 +9,11 @@ import { BufferGeometry, Material, Mesh, Vector3 } from 'three';
  * @extends {Mesh}
  */
 export default class RigidBody extends Mesh {
-  private velocity: Vector3;
+  private _velocity: Vector3;
 
-  private acceleration: Vector3;
+  private _acceleration: Vector3;
 
-  private mass: number;
+  private _mass: number;
 
   /**
    * Creates an instance of RigidBody.
@@ -42,6 +42,30 @@ export default class RigidBody extends Mesh {
     this.velocity = options?.velocity ?? new Vector3(0, 0, 0);
     this.acceleration = options?.acceleration ?? new Vector3(0, 0, 0);
     this.mass = options?.mass ?? 0;
+  }
+
+  get velocity(): Vector3 {
+    return this._velocity;
+  }
+  get acceleration(): Vector3 {
+    return this._acceleration;
+  }
+  get mass(): number {
+    return this.mass;
+  }
+
+  set velocity(newVelocity: Vector3) {
+    this._velocity = newVelocity;
+  }
+  set acceleration(newAcceleration: Vector3) {
+    this._acceleration = newAcceleration;
+  }
+  set mass(newMass: number) {
+    if (newMass >= 0) {
+      this._mass = newMass;
+    } else {
+      throw new Error('mass cannot be negative');
+    }
   }
 
   /**

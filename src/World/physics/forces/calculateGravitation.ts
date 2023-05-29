@@ -8,8 +8,8 @@ import { DIST_MULT, GRAV_CONST, SOLAR_MASS } from '../../utils/constants';
  * @interface PointMass
  */
 interface PointMass {
-  readonly mass: number;
-  readonly position: Vector3;
+  mass: number;
+  position: Vector3;
 }
 
 /**

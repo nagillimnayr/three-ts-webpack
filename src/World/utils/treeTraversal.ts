@@ -1,30 +1,31 @@
 import RigidBody from '../components/RigidBody';
+import calculateGravitation from '../physics/forces/calculateGravitation';
 
-function inOrderTraversal(root: RigidBody, deltaTime: number): void {
+function inOrderTraversal(body: RigidBody, deltaTime: number): void {
   // If root body does not exist, return
-  if (!root) {
+  if (!body) {
     return;
   }
 
-  const numOfChildren = root.children.length;
+  const numOfChildren = body.children.length;
   // Traverse through each child branch
   for (let i = 0; i < numOfChildren; i++) {
     // try to cast child to RigidBody
-    const body = root.children[i] as RigidBody;
-    if (!body) {
+    const orbitingBody = body.children[i] as RigidBody;
+    if (!orbitingBody) {
       continue;
     }
 
     // Calculate new acceleration
-    body.calculateAcceleration(root);
+    orbitingBody.acceleration = calculateGravitation(orbitingBody, body);
     // Calculate new velocity
-    body.updateVelocity(deltaTime);
+    orbitingBody.updateVelocity(deltaTime);
     // Calculate new position
-    body.updatePosition(deltaTime);
+    orbitingBody.updatePosition(deltaTime);
 
     // Traverse deeper into the tree
-    if (body.children.length > 0) {
-      inOrderTraversal(body, deltaTime);
+    if (orbitingBody.children.length > 0) {
+      inOrderTraversal(orbitingBody, deltaTime);
     }
   }
 }
