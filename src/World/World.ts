@@ -17,6 +17,7 @@ import resizeCanvas from './utils/canvas';
 import createClock from './systems/clock';
 import Body from './components/Body';
 import { DIST_MULT, KM_TO_M } from './utils/constants';
+import inOrderTraversal from './utils/treeTraversal';
 
 export default class World {
   camera: PerspectiveCamera;
@@ -71,8 +72,11 @@ export default class World {
   }
 
   render() {
-    // update all of the bodies in the simulation
+    // get time since last update
     const deltaTime = this.clock.getDelta() * 0.001; // Convert to seconds
+
+    // update all of the bodies in the simulation
+    inOrderTraversal(this.scene.children[0] as Body, deltaTime);
 
     // render a frame
     this.renderer.render(this.scene, this.camera);
