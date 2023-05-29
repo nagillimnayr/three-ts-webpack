@@ -1,5 +1,5 @@
 import Body from '../components/Body';
-import calculateGravitation from '../physics/forces/calculateGravitation';
+import calculateGravitation from '../systems/physics/forces/calculateGravitation';
 
 function inOrderTraversal(body: Body, deltaTime: number): void {
   // If root body does not exist, return
