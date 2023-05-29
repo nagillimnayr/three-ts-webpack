@@ -1,4 +1,5 @@
 import { BufferGeometry, Material, Mesh, Vector3 } from 'three';
+import PointMass from '../physics/PointMass';
 
 /**
  * @description
@@ -8,7 +9,7 @@ import { BufferGeometry, Material, Mesh, Vector3 } from 'three';
  * @class RigidBody
  * @extends {Mesh}
  */
-export default class RigidBody extends Mesh {
+export default class RigidBody extends Mesh implements PointMass {
   private _velocity: Vector3;
 
   private _acceleration: Vector3;

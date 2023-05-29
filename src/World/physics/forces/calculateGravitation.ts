@@ -1,16 +1,6 @@
 import { Vector3 } from 'three';
 import { DIST_MULT, GRAV_CONST, SOLAR_MASS } from '../../utils/constants';
-
-/**
- * @description
- * @author Ryan Milligan
- * @date 28/05/2023
- * @interface PointMass
- */
-interface PointMass {
-  mass: number;
-  position: Vector3;
-}
+import PointMass from '../PointMass';
 
 /**
  * @description
