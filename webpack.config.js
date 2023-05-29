@@ -13,7 +13,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Three.js + TS + Webpack',
+      title: 'Development',
     }),
   ],
   module: {
@@ -31,10 +31,14 @@ module.exports = {
         use: 'ts-loader',
         exclude: /node_modules/,
       },
+      {
+        test: /\.js$/i,
+        use: 'source-map-loader',
+      },
     ],
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js', '.jsx'],
+    extensions: ['.webpack.js', '.web.js', '.tsx', '.ts', '.js', '.jsx'],
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
