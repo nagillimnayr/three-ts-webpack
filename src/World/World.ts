@@ -6,6 +6,7 @@ import {
   PerspectiveCamera,
   Scene,
   SphereGeometry,
+  Vector3,
   WebGLRenderer,
 } from 'three';
 import createCamera from './components/camera';
@@ -15,6 +16,7 @@ import createCube from './components/cube';
 import resizeCanvas from './utils/canvas';
 import createClock from './systems/clock';
 import Body from './components/Body';
+import { DIST_MULT, KM_TO_M } from './utils/constants';
 
 export default class World {
   camera: PerspectiveCamera;
@@ -41,10 +43,22 @@ export default class World {
     // const cube = createCube(new Color(0xf8333c)); // color: imperial red
     // this.scene.add(cube);
     const sphereGeometry = new SphereGeometry(1, 32, 32);
-    const sphereMaterial1 = new MeshBasicMaterial({
+    const sunMaterial = new MeshBasicMaterial({
       color: 0xfdee00, // color: Aureolin
     });
-    const sun = new Body(sphereGeometry, sphereMaterial1);
+    const earthMaterial = new MeshBasicMaterial({
+      color: 0x03c03c, // color: Dark Pastel Green
+    });
+    const sun = new Body(sphereGeometry, sunMaterial, {
+      mass: 1, // 1 Solar Mass
+    });
+    const earth = new Body(sphereGeometry, earthMaterial, {
+      mass: 0,
+      velocity: new Vector3(0, 0, (-30 * KM_TO_M) / DIST_MULT), // 30km/s
+    });
+    earth.position.set(14.95, 0, 0);
+    earth.scale.set(0.2, 0.2, 0.2);
+    sun.add(earth); // attach earth to sun
     this.scene.add(sun);
 
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
