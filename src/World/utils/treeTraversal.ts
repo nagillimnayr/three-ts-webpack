@@ -1,7 +1,7 @@
-import RigidBody from '../components/RigidBody';
+import Body from '../components/Body';
 import calculateGravitation from '../physics/forces/calculateGravitation';
 
-function inOrderTraversal(body: RigidBody, deltaTime: number): void {
+function inOrderTraversal(body: Body, deltaTime: number): void {
   // If root body does not exist, return
   if (!body) {
     return;
@@ -11,7 +11,7 @@ function inOrderTraversal(body: RigidBody, deltaTime: number): void {
   // Traverse through each child branch
   for (let i = 0; i < numOfChildren; i++) {
     // try to cast child to RigidBody
-    const orbitingBody = body.children[i] as RigidBody;
+    const orbitingBody = body.children[i] as Body;
     if (!orbitingBody) {
       continue;
     }
