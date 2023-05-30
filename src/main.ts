@@ -5,6 +5,7 @@ import World from './World/World';
 /** Todo:
  * Create Debug UI
  * make debug UI optional via query parameters
+ * create separate tree structure for the Bodies in the sim
  */
 
 const main = () => {

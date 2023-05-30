@@ -1,5 +1,6 @@
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import {
+  AxesHelper,
   Clock,
   Color,
   MeshBasicMaterial,
@@ -90,6 +91,7 @@ export default class World {
     timeFolder.open();
 
     this.scene.add(new PolarGridHelper(20));
+    this.scene.add(new AxesHelper(20));
   }
 
   render() {
