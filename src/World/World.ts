@@ -43,7 +43,7 @@ export default class World {
     this.clock = createClock();
     this.stats = new Stats();
     this.gui = new GUI();
-    this.timeScale = 20;
+    this.timeScale = 1;
 
     // Attach canvas to container
     container.appendChild(this.renderer.domElement);
@@ -61,10 +61,12 @@ export default class World {
     const sun = new Body(sphereGeometry, sunMaterial, {
       mass: 1, // 1 Solar Mass
     });
+    sun.name = 'Sun';
     const earth = new Body(sphereGeometry, earthMaterial, {
       mass: 0,
       velocity: new Vector3(0, 0, (-30 * KM_TO_M) / DIST_MULT), // 30km/s
     });
+    earth.name = 'Earth';
     earth.position.set(14.95, 0, 0);
     earth.scale.set(0.3, 0.3, 0.3);
     sun.add(earth); // attach earth to sun
@@ -80,11 +82,12 @@ export default class World {
 
     this.renderer.domElement.parentElement.appendChild(this.stats.dom);
 
-    const earthFolder = this.gui.addFolder('earth');
-    earthFolder.add(earth.position, 'x', -20, 20, 0.0001);
-    earthFolder.add(earth.position, 'y', -20, 20, 0.0001);
-    earthFolder.add(earth.position, 'z', -20, 20, 0.0001);
-    earthFolder.open();
+    const sunFolder = this.gui.addFolder('Sun');
+    sunFolder.add(sun, 'mass', 0, 5, 0.0001);
+    sunFolder.open();
+    const timeFolder = this.gui.addFolder('Time');
+    timeFolder.add(this, 'timeScale', 0, 10, 1);
+    timeFolder.open();
 
     this.scene.add(new PolarGridHelper(20));
   }
