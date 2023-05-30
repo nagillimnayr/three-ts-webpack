@@ -8,19 +8,21 @@ import {
   PolarGridHelper,
   Scene,
   SphereGeometry,
+  Vector2,
   Vector3,
   WebGLRenderer,
 } from 'three';
 import createCamera from './components/camera';
 import createRenderer from './systems/renderer';
 import createScene from './components/scene';
-import resizeCanvas from './utils/canvas';
+import { resizeCanvas, getNormalizedMousePos } from './utils/canvas';
 import createClock from './systems/clock';
 import Body from './components/Body';
 import { DAY, DIST_MULT, KM_TO_M } from './utils/constants';
 import inOrderTraversal from './utils/treeTraversal';
 import Stats from 'three/examples/jsm/libs/stats.module';
 import { GUI } from 'dat.gui';
+import SelectionManager from './systems/SelectionManager';
 
 export default class World {
   camera: PerspectiveCamera;
@@ -35,6 +37,7 @@ export default class World {
   stats: Stats;
   gui: GUI;
   timeScale: number;
+  selectionManager: SelectionManager;
 
   constructor(container: HTMLElement | HTMLDivElement) {
     // Create components
@@ -45,6 +48,7 @@ export default class World {
     this.stats = new Stats();
     this.gui = new GUI();
     this.timeScale = 1;
+    this.selectionManager = new SelectionManager();
 
     // Attach canvas to container
     container.appendChild(this.renderer.domElement);
@@ -92,6 +96,14 @@ export default class World {
 
     this.scene.add(new PolarGridHelper(20));
     this.scene.add(new AxesHelper(20));
+
+    // Setup mouse handler
+    window.addEventListener('click', this.handleClick);
+
+    window.addEventListener('resize', () => {
+      resizeCanvas(this.renderer);
+    });
+    resizeCanvas(this.renderer);
   }
 
   render() {
@@ -105,5 +117,11 @@ export default class World {
     this.renderer.render(this.scene, this.camera);
 
     this.stats.update();
+  }
+
+  handleClick(event: MouseEvent) {
+    const canvas: HTMLCanvasElement = this.renderer.domElement;
+    const pos: Vector2 = getNormalizedMousePos(event, canvas);
+    this.selectionManager.select(pos, this.camera, this);
   }
 }
