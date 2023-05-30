@@ -4,6 +4,7 @@ import {
   Color,
   MeshBasicMaterial,
   PerspectiveCamera,
+  PolarGridHelper,
   Scene,
   SphereGeometry,
   Vector3,
@@ -84,6 +85,8 @@ export default class World {
     earthFolder.add(earth.position, 'y', -20, 20, 0.0001);
     earthFolder.add(earth.position, 'z', -20, 20, 0.0001);
     earthFolder.open();
+
+    this.scene.add(new PolarGridHelper(20));
   }
 
   render() {
