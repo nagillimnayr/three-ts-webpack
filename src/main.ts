@@ -1,5 +1,4 @@
 import './style/style.css';
-import resizeCanvas from './World/utils/canvas';
 import World from './World/World';
 
 /** Todo:
@@ -22,11 +21,6 @@ const main = () => {
 
   // create World
   const world = new World(canvasHolder);
-
-  window.addEventListener('resize', () => {
-    resizeCanvas(world.renderer);
-  });
-  resizeCanvas(world.renderer);
 
   // render loop
   const render = (time: number) => {
