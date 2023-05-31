@@ -98,7 +98,9 @@ export default class World {
     this.scene.add(new AxesHelper(20));
 
     // Setup mouse handler
-    window.addEventListener('click', this.handleClick);
+    window.addEventListener('click', (event: MouseEvent) => {
+      this.handleClick(event);
+    });
 
     window.addEventListener('resize', () => {
       resizeCanvas(this.renderer);
