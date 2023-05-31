@@ -10,5 +10,17 @@ import Body from '../components/Body';
  * @class DataManager
  */
 export class DataManager {
-  trackedBody: Body; // Body to track and record data from
+  _trackedBody: Body; // Body to track and record data from
+
+  constructor() {
+    this._trackedBody = null;
+  }
+
+  track(body: Body) {
+    this._trackedBody = body;
+  }
+
+  get trackedBody(): Body {
+    return this._trackedBody;
+  }
 }
