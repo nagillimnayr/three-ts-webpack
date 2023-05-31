@@ -23,6 +23,10 @@ export class CameraManager {
     return this._topCamera;
   }
 
+  set activeCamera(camera: Camera) {
+    this._activeCamera = camera;
+  }
+
   setActiveCamera(camera: Camera) {
     this._activeCamera = camera;
   }
