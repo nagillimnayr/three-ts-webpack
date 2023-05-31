@@ -1,6 +1,6 @@
 import Body from '../components/Body';
 import { Geometry } from '../namespaces/Geometry';
-import data from '../data/Planets.json';
+import data from '../data/presets/Planets.json';
 import { MeshBasicMaterial, Vector3 } from 'three';
 import { DIST_MULT } from './constants';
 
