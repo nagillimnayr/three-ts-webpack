@@ -21,7 +21,6 @@ import Body from './components/Body';
 import { DAY, DIST_MULT, KM_TO_M } from './utils/constants';
 import inOrderTraversal from './utils/treeTraversal';
 import Stats from 'three/examples/jsm/libs/stats.module';
-import { GUI } from 'dat.gui';
 import SelectionManager from './systems/SelectionManager';
 
 export default class World {
