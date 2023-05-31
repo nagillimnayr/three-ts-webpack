@@ -1,6 +1,7 @@
 import { Camera, Raycaster, Vector2 } from 'three';
 import Body from '../components/Body';
 import World from '../World';
+import { RaycastLayer } from '../utils/layers';
 
 export default class SelectionManager {
   raycaster: Raycaster;
@@ -9,6 +10,7 @@ export default class SelectionManager {
   constructor() {
     this.raycaster = new Raycaster();
     this.selected = undefined;
+    this.raycaster.layers.set(RaycastLayer.bodies);
   }
 
   select(normalizedPosition: Vector2, camera: Camera, world: World) {
@@ -16,9 +18,9 @@ export default class SelectionManager {
     const hitObjects = this.raycaster.intersectObjects(world.scene.children);
     if (hitObjects.length > 0) {
       // get the first object to be hit and try to cast to Body
-      const hitObj = hitObjects[0].object as Body;
+      const hitObj: Body = hitObjects[0].object as Body;
 
-      if (hitObj) {
+      if (hitObj !== undefined) {
         this.selected = hitObj;
         console.log(hitObj);
       }

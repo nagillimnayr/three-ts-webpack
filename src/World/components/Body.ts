@@ -1,5 +1,6 @@
 import { BufferGeometry, Material, Mesh, Vector3 } from 'three';
 import PointMass from '../interfaces/PointMass';
+import { RaycastLayer } from '../utils/layers';
 
 /**
  * @description
@@ -43,6 +44,8 @@ export default class Body extends Mesh implements PointMass {
     this._velocity = options?.velocity ?? new Vector3(0, 0, 0);
     this._acceleration = options?.acceleration ?? new Vector3(0, 0, 0);
     this._mass = options?.mass ?? 0;
+
+    this.layers.enable(RaycastLayer.bodies);
   }
 
   get velocity(): Vector3 {
