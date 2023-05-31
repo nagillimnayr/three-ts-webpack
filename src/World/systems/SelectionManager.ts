@@ -21,8 +21,9 @@ export default class SelectionManager {
       const hitObj: Body = hitObjects[0].object as Body;
 
       if (hitObj !== undefined) {
-        this.selected = hitObj;
-        console.log(hitObj);
+        console.log('Hit!:', hitObj.name);
+        this.selected.unselect();
+        this.selected = hitObj.select();
       }
     }
   }

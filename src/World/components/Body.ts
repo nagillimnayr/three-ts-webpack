@@ -17,6 +17,8 @@ export default class Body extends Mesh implements PointMass {
 
   private _mass: number;
 
+  private _isSelected: boolean;
+
   /**
    * Creates an instance of Body.
    * @author Ryan Milligan
@@ -45,6 +47,7 @@ export default class Body extends Mesh implements PointMass {
     this._acceleration = options?.acceleration ?? new Vector3(0, 0, 0);
     this._mass = options?.mass ?? 0;
 
+    this._isSelected = false;
     this.layers.enable(RaycastLayer.bodies);
   }
 
@@ -56,6 +59,9 @@ export default class Body extends Mesh implements PointMass {
   }
   get mass(): number {
     return this._mass;
+  }
+  get isSelected(): boolean {
+    return this._isSelected;
   }
 
   set velocity(newVelocity: Vector3) {
@@ -92,5 +98,14 @@ export default class Body extends Mesh implements PointMass {
    */
   updateVelocity(deltaTime: number) {
     this.velocity.addScaledVector(this.acceleration, deltaTime);
+  }
+
+  select(): Body {
+    this._isSelected = true;
+    return this;
+  }
+  unselect(): Body {
+    this._isSelected = false;
+    return this;
   }
 }
