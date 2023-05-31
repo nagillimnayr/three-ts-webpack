@@ -3,12 +3,12 @@ import { Camera } from 'three';
 import { CameraManager } from '../components/CameraManager';
 
 export default function createCameraGUI(cameraManager: CameraManager): GUI {
-  const cameraController = new GUI();
-  cameraController.title('Camera Controller');
+  const cameraGUI = new GUI();
+  cameraGUI.title('Camera Controller');
 
-  const activeCamFolder = cameraController.addFolder('Active Camera');
+  const activeCamFolder = cameraGUI.addFolder('Active Camera');
   const cameraOptions = [cameraManager.mainCamera, cameraManager.topCamera];
   activeCamFolder.add(cameraManager, 'activeCamera', cameraOptions);
 
-  return cameraController;
+  return cameraGUI;
 }

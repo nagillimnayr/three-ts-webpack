@@ -1,9 +1,11 @@
 import GUI from 'lil-gui';
 import Body from '../components/Body';
 
-export function createBodyController(body: Body): GUI {
-  const gui = new GUI();
-  gui.add(body, 'name');
+export function createBodyGUI(body?: Body): GUI {
+  const bodyGUI = new GUI();
+  if (body) {
+    bodyGUI.add(body, 'name');
+  }
 
-  return gui;
+  return bodyGUI;
 }
