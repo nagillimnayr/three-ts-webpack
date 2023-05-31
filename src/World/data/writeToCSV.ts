@@ -1,22 +1,33 @@
-import { appendFileSync } from 'fs-extra';
+import fs from 'fs-extra';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-export interface DataSet {
-  records: dataRecord[];
-}
 export interface dataRecord {
-  field1: string;
-  field2: string;
+  firstName: string;
+  lastName: string;
+  age: number;
 }
 
-export function saveToCSV(dataSet: DataSet) {
-  for (let i = 0; i < dataSet.records.length; i++) {
-    const record = dataSet.records[i];
+export function writeToCSV(dataSet: dataRecord[], fileName: string) {
+  const __filename = fileURLToPath(import.meta.url);
 
-    const csvString = `${record.field1},${record.field2}\n`;
+  const __dirname = path.dirname(__filename);
+
+  const pathToNewFile = path.resolve(
+    __dirname,
+    path.join('recordedData', `${fileName}.csv`)
+  );
+  for (let i = 0; i < dataSet.length; i++) {
+    const record = dataSet[i];
+
+    const csvString = `${record.firstName},${record.lastName},${record.age},\n`;
+
     try {
-      appendFileSync('./recordedData/testCSV.csv', csvString);
+      fs.appendFileSync(pathToNewFile, csvString);
     } catch (err) {
       console.error(err);
     }
   }
+
+  console.log("complete: '", fileName, "' written to: ", pathToNewFile);
 }
