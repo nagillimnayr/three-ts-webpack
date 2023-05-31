@@ -46,7 +46,6 @@ export default class World {
     this.scene = createScene();
     this.clock = createClock();
     this.stats = new Stats();
-    this.gui = new GUI();
     this.timeScale = 1;
     this.selectionManager = new SelectionManager();
 
@@ -86,13 +85,6 @@ export default class World {
     resizeCanvas(this.renderer);
 
     this.renderer.domElement.parentElement.appendChild(this.stats.dom);
-
-    const sunFolder = this.gui.addFolder('Sun');
-    sunFolder.add(sun, 'mass', 0, 5, 0.0001);
-    sunFolder.open();
-    const timeFolder = this.gui.addFolder('Time');
-    timeFolder.add(this, 'timeScale', 0, 10, 1);
-    timeFolder.open();
 
     const polarGrid = new PolarGridHelper(20);
     const axes = new AxesHelper(20);
