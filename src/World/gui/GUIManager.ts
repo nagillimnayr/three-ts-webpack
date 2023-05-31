@@ -1,13 +1,13 @@
 import GUI from 'lil-gui';
 
 export class GUIManager {
-  cameraController?: GUI;
-  timeController?: GUI;
-  bodyController?: GUI;
+  cameraGUI?: GUI;
+  timeGUI?: GUI;
+  bodyGUI?: GUI;
 
   constructor(options?: { camGUI?: GUI; timeGUI?: GUI; bodyGUI?: GUI }) {
-    this.cameraController = options?.camGUI ?? null;
-    this.timeController = options?.timeGUI ?? null;
-    this.bodyController = options?.bodyGUI ?? null;
+    this.cameraGUI = options?.camGUI ?? null;
+    this.timeGUI = options?.timeGUI ?? null;
+    this.bodyGUI = options?.bodyGUI ?? null;
   }
 }

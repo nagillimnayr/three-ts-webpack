@@ -7,7 +7,10 @@ export default function createCameraGUI(cameraManager: CameraManager): GUI {
   cameraGUI.title('Camera Controller');
 
   const activeCamFolder = cameraGUI.addFolder('Active Camera');
-  const cameraOptions = [cameraManager.mainCamera, cameraManager.topCamera];
+  const cameraOptions = {
+    MainCam: cameraManager.mainCamera,
+    TopCam: cameraManager.topCamera,
+  };
   activeCamFolder.add(cameraManager, 'activeCamera', cameraOptions);
 
   return cameraGUI;

@@ -1,4 +1,9 @@
-import { Camera, OrthographicCamera, PerspectiveCamera } from 'three';
+import {
+  Camera,
+  MathUtils,
+  OrthographicCamera,
+  PerspectiveCamera,
+} from 'three';
 import { createMainCamera, createTopCamera } from './camera';
 
 export class CameraManager {
@@ -10,7 +15,13 @@ export class CameraManager {
     this._mainCamera = createMainCamera();
     this._topCamera = createTopCamera();
     this._activeCamera = this._mainCamera;
-    this._mainCamera.position.set(0, 0, 10);
+
+    this._mainCamera.position.set(0, 0, 10); // set back from origin
+
+    // set top cam to be above origin
+    this._topCamera.position.set(0, 10, 0);
+    // rotate top cam to look down
+    this._topCamera.rotateX(MathUtils.degToRad(-90));
   }
 
   get activeCamera() {

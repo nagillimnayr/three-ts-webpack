@@ -22,9 +22,12 @@ export function createMainCamera() {
 }
 
 export function createTopCamera() {
+  const zoomOut = 20;
   const camera = new OrthographicCamera(
-    75, // FOV
-    2, // Aspect Ratio
+    -2 * zoomOut, // Left
+    2 * zoomOut, // Right
+    1 * zoomOut, // Top
+    -1 * zoomOut, // Bottom
     0.00001, // Near
     10000 // Far
   );

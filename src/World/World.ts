@@ -21,21 +21,20 @@ import inOrderTraversal from './utils/treeTraversal';
 import Stats from 'three/examples/jsm/libs/stats.module';
 import SelectionManager from './systems/SelectionManager';
 import { CameraManager } from './components/CameraManager';
+import { GUIManager } from './gui/GUIManager';
+import createGUIManager from './gui/createGUIManager';
 
 export default class World {
   activeCamera: Camera;
   cameraManager: CameraManager;
-
   renderer: WebGLRenderer;
-
   scene: Scene;
-
   clock: Clock;
-
   controls: OrbitControls;
   stats: Stats;
   timeScale: number;
   selectionManager: SelectionManager;
+  guiManager: GUIManager;
 
   constructor(container: HTMLElement | HTMLDivElement) {
     // Create components
@@ -46,6 +45,7 @@ export default class World {
     this.stats = new Stats();
     this.timeScale = 1;
     this.selectionManager = new SelectionManager();
+    this.guiManager = createGUIManager(this.cameraManager);
 
     // Attach canvas to container
     container.appendChild(this.renderer.domElement);
@@ -74,6 +74,7 @@ export default class World {
     sun.add(earth); // attach earth to sun
     this.scene.add(sun);
 
+    // create orbital controls for main camera
     this.controls = new OrbitControls(
       this.cameraManager.mainCamera,
       this.renderer.domElement
@@ -118,6 +119,6 @@ export default class World {
   handleClick(event: MouseEvent) {
     const canvas: HTMLCanvasElement = this.renderer.domElement;
     const pos: Vector2 = getNormalizedMousePos(event, canvas);
-    this.selectionManager.select(pos, this.activeCamera, this);
+    this.selectionManager.select(pos, this.cameraManager.activeCamera, this);
   }
 }
