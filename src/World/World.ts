@@ -94,8 +94,10 @@ export default class World {
     timeFolder.add(this, 'timeScale', 0, 10, 1);
     timeFolder.open();
 
-    this.scene.add(new PolarGridHelper(20));
-    this.scene.add(new AxesHelper(20));
+    const polarGrid = new PolarGridHelper(20);
+    const axes = new AxesHelper(20);
+    this.scene.add(polarGrid);
+    this.scene.add(axes);
 
     // Setup mouse handler
     window.addEventListener('click', (event: MouseEvent) => {
