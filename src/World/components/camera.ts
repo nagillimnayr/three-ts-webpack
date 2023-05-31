@@ -1,4 +1,4 @@
-import { PerspectiveCamera } from 'three';
+import { OrthographicCamera, PerspectiveCamera } from 'three';
 
 /**
  * Creates and returns a Three.js PerspectiveCamera object
@@ -9,8 +9,20 @@ import { PerspectiveCamera } from 'three';
  * @export
  * @returns {PerspectiveCamera}
  */
-export default function createCamera() {
+export function createMainCamera() {
   const camera = new PerspectiveCamera(
+    75, // FOV
+    2, // Aspect Ratio
+    0.00001, // Near
+    10000 // Far
+  );
+  camera.position.set(0, 0, 10);
+
+  return camera;
+}
+
+export function createTopCamera() {
+  const camera = new OrthographicCamera(
     75, // FOV
     2, // Aspect Ratio
     0.00001, // Near

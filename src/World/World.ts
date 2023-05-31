@@ -1,10 +1,9 @@
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import {
   AxesHelper,
+  Camera,
   Clock,
-  Color,
   MeshBasicMaterial,
-  PerspectiveCamera,
   PolarGridHelper,
   Scene,
   SphereGeometry,
@@ -12,7 +11,6 @@ import {
   Vector3,
   WebGLRenderer,
 } from 'three';
-import createCamera from './components/camera';
 import createRenderer from './systems/renderer';
 import createScene from './components/scene';
 import { resizeCanvas, getNormalizedMousePos } from './utils/canvas';
@@ -22,9 +20,11 @@ import { DAY, DIST_MULT, KM_TO_M } from './utils/constants';
 import inOrderTraversal from './utils/treeTraversal';
 import Stats from 'three/examples/jsm/libs/stats.module';
 import SelectionManager from './systems/SelectionManager';
+import { CameraManager } from './components/CameraManager';
 
 export default class World {
-  camera: PerspectiveCamera;
+  activeCamera: Camera;
+  cameraManager: CameraManager;
 
   renderer: WebGLRenderer;
 
@@ -39,7 +39,7 @@ export default class World {
 
   constructor(container: HTMLElement | HTMLDivElement) {
     // Create components
-    this.camera = createCamera();
+    this.cameraManager = new CameraManager();
     this.renderer = createRenderer();
     this.scene = createScene();
     this.clock = createClock();
@@ -74,9 +74,11 @@ export default class World {
     sun.add(earth); // attach earth to sun
     this.scene.add(sun);
 
-    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    this.controls = new OrbitControls(
+      this.cameraManager.mainCamera,
+      this.renderer.domElement
+    );
     // controls.update() must be called after any manual changes to the camera's transform
-    this.camera.position.set(0, 0, 10);
     this.controls.update();
 
     // Adjust canvas size to be in line with it's display size
@@ -108,7 +110,7 @@ export default class World {
     inOrderTraversal(this.scene.children[0] as Body, deltaTime);
 
     // render a frame
-    this.renderer.render(this.scene, this.camera);
+    this.renderer.render(this.scene, this.cameraManager.activeCamera);
 
     this.stats.update();
   }
@@ -116,6 +118,6 @@ export default class World {
   handleClick(event: MouseEvent) {
     const canvas: HTMLCanvasElement = this.renderer.domElement;
     const pos: Vector2 = getNormalizedMousePos(event, canvas);
-    this.selectionManager.select(pos, this.camera, this);
+    this.selectionManager.select(pos, this.activeCamera, this);
   }
 }
