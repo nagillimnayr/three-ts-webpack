@@ -34,7 +34,6 @@ export default class World {
 
   controls: OrbitControls;
   stats: Stats;
-  gui: GUI;
   timeScale: number;
   selectionManager: SelectionManager;
 
