@@ -26,4 +26,10 @@ export class CameraManager {
   setActiveCamera(camera: Camera) {
     this._activeCamera = camera;
   }
+  switchToMain() {
+    this._activeCamera = this._mainCamera;
+  }
+  switchToTop() {
+    this._activeCamera = this._topCamera;
+  }
 }
