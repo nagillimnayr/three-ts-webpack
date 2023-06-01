@@ -22,7 +22,9 @@ export default class SelectionManager {
 
       if (hitObj !== undefined) {
         console.log('Hit!:', hitObj.name);
-        this.selected.unselect();
+        if(this.selected !== undefined) {
+          this.selected.unselect();
+        }
         this.selected = hitObj.select();
       }
     }
