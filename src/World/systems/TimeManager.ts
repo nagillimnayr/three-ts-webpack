@@ -9,7 +9,7 @@ export class TimeManager {
    * @type {Clock}
    * @memberof TimeManager
    */
-  private _realTimeClock: Clock;
+  private _clock: Clock;
   /**
    * @description Tracks the time that has elapsed in-simulation.
    * Accounts for timeScale and whether sim has been paused or not.
@@ -20,6 +20,16 @@ export class TimeManager {
    * @memberof TimeManager
    */
   private _timeElapsed: number;
+  /**
+   * @description Tracks the real time that the simulation has been running
+   *
+   * @author Ryan Milligan
+   * @date 31/05/2023
+   * @private
+   * @type {number}
+   * @memberof TimeManager
+   */
+  private _realTimeElapsed: number;
   /**
    * @description Scalar value to speed up / slow-down the simulation.
    * At a timeScale of 1, one real second is equivalent to one day in the
@@ -33,8 +43,44 @@ export class TimeManager {
   private _timeScale: number;
 
   constructor() {
-    this._realTimeClock = new Clock(true);
+    this._clock = new Clock(true);
     this._timeElapsed = 0;
+    this._realTimeElapsed = 0;
     this._timeScale = 1;
+  }
+
+  pause() {
+    this._clock.stop();
+  }
+
+  unpause() {
+    this._clock.start();
+  }
+
+  tick(): number {
+    return this.deltaTime;
+  }
+
+  get isRunning(): boolean {
+    return this._clock.running;
+  }
+
+  get realTimeElapsed(): number {
+    return this._realTimeElapsed;
+  }
+  get timeElapsed(): number {
+    return this._timeElapsed;
+  }
+  get deltaTime(): number {
+    if (!this.isRunning) {
+      return 0;
+    }
+
+    const deltaTime = this._clock.getDelta();
+    this._realTimeElapsed += deltaTime;
+    const scaledDeltaTime = deltaTime * this._timeScale;
+    this._timeElapsed += scaledDeltaTime;
+
+    return scaledDeltaTime;
   }
 }
