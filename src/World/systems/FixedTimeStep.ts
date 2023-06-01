@@ -27,5 +27,10 @@ export default class FixedTimeStep {
 
     // Save the truncated part to add it on during the next update
     this._remainder = numOfStepsFloat - numOfStepsInt;
+
+    // Call the update function the requisite number of times
+    for (let i = 0; i < numOfStepsInt; i++) {
+      this._updateFn(this._timeStep);
+    }
   }
 }
