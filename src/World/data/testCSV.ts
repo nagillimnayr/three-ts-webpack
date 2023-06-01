@@ -1,5 +1,5 @@
 import { Chance } from 'chance';
-import { dataRecord, writeToCSV } from './writeToCSV.ts';
+import { dataRecord, writeToCSV } from './writeToCSV';
 
 export default function testCSV() {
   const dataSet: dataRecord[] = [];

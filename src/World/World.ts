@@ -23,29 +23,27 @@ import SelectionManager from './systems/SelectionManager';
 import { CameraManager } from './components/CameraManager';
 import { GUIManager } from './gui/GUIManager';
 import createGUIManager from './gui/createGUIManager';
+import { TimeManager } from './systems/TimeManager';
 
 export default class World {
-  activeCamera: Camera;
   cameraManager: CameraManager;
   renderer: WebGLRenderer;
   scene: Scene;
-  clock: Clock;
   controls: OrbitControls;
   stats: Stats;
-  timeScale: number;
   selectionManager: SelectionManager;
   guiManager: GUIManager;
+  timeManager: TimeManager;
 
   constructor(container: HTMLElement | HTMLDivElement) {
     // Create components
     this.cameraManager = new CameraManager();
     this.renderer = createRenderer();
     this.scene = createScene();
-    this.clock = createClock();
     this.stats = new Stats();
-    this.timeScale = 1;
     this.selectionManager = new SelectionManager();
-    this.guiManager = createGUIManager(this.cameraManager);
+    this.timeManager = new TimeManager();
+    this.guiManager = createGUIManager(this.cameraManager, this.timeManager);
 
     // Attach canvas to container
     container.appendChild(this.renderer.domElement);
@@ -101,11 +99,16 @@ export default class World {
       resizeCanvas(this.renderer);
     });
     resizeCanvas(this.renderer);
+
+    this.timeManager.unpause();
   }
 
   render() {
     // get time since last update
-    const deltaTime = this.clock.getDelta() * this.timeScale * DAY;
+    const deltaTime = this.timeManager.deltaTime;
+    if (deltaTime <= 0) {
+      return;
+    }
 
     // update all of the bodies in the simulation
     inOrderTraversal(this.scene.children[0] as Body, deltaTime);

@@ -1,4 +1,5 @@
 import { Clock } from 'three';
+import { DAY } from '../utils/constants';
 
 export class TimeManager {
   /**
@@ -78,9 +79,20 @@ export class TimeManager {
 
     const deltaTime = this._clock.getDelta();
     this._realTimeElapsed += deltaTime;
-    const scaledDeltaTime = deltaTime * this._timeScale;
+    const scaledDeltaTime = deltaTime * this._timeScale * DAY;
     this._timeElapsed += scaledDeltaTime;
 
     return scaledDeltaTime;
+  }
+
+  get timeScale(): number {
+    return this._timeScale;
+  }
+  set timeScale(newTimeScale: number) {
+    if (newTimeScale > 1) {
+      this._timeScale = newTimeScale;
+    } else {
+      this._timeScale = 1;
+    }
   }
 }
