@@ -43,7 +43,7 @@ interface PlanetDataJSON {
   'Uranus': PlanetData;
   'Neptune': PlanetData;
 }
-export default function loadPlanetPreset(name: key) {
+export default function loadPlanetPreset(name: key): Body {
   const jsonData: PlanetDataJSON = data;
   const index: keyof typeof jsonData = name;
   const planetData: PlanetData = jsonData[index];
@@ -53,9 +53,13 @@ export default function loadPlanetPreset(name: key) {
     new MeshBasicMaterial({ color: planetData.Color }),
     {
       mass: planetData.Mass_KG,
-      velocity: new Vector3(0, planetData.MaxVelocity_KMs / DIST_MULT, 0),
+      velocity: new Vector3(0, 0, planetData.MaxVelocity_KMs / DIST_MULT),
     }
   );
 
   planet.position.x = planetData.Periapsis_M / DIST_MULT;
+
+  planet.name = name;
+
+  return planet;
 }
