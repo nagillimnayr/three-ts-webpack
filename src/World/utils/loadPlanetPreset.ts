@@ -2,7 +2,7 @@ import Body from '../components/Body';
 import { Geometry } from '../namespaces/Geometry';
 import data from '../data/presets/Planets.json';
 import { MeshBasicMaterial, Vector3 } from 'three';
-import { DIST_MULT } from './constants';
+import { DIST_MULT, KM_TO_M, SOLAR_MASS } from './constants';
 
 type key =
   | 'Mercury'
@@ -50,10 +50,10 @@ export default function loadPlanetPreset(name: key): Body {
 
   const planet: Body = new Body(
     Geometry.sphere,
-    new MeshBasicMaterial({ color: planetData.Color }),
+    new MeshBasicMaterial({ color: parseInt(planetData.Color, 16) }),
     {
-      mass: planetData.Mass_KG,
-      velocity: new Vector3(0, 0, planetData.MaxVelocity_KMs / DIST_MULT),
+      velocity: new Vector3(0, 0, -(planetData.MaxVelocity_KMs * KM_TO_M) / DIST_MULT),
+      mass: planetData.Mass_KG / SOLAR_MASS,
     }
   );
 
