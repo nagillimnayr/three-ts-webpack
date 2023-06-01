@@ -85,7 +85,7 @@ export default class Body extends Mesh implements PointMass {
    * @param {number} deltaTime
    * @memberof Body
    */
-  updatePosition(deltaTime: number) {
+  private updatePosition(deltaTime: number) {
     this.position.addScaledVector(this.velocity, deltaTime);
   }
 
@@ -96,8 +96,15 @@ export default class Body extends Mesh implements PointMass {
    * @param {number} deltaTime
    * @memberof Body
    */
-  updateVelocity(deltaTime: number) {
+  private updateVelocity(deltaTime: number) {
     this.velocity.addScaledVector(this.acceleration, deltaTime);
+  }
+
+  update(deltaTime: number) {
+    // Note: test whether swapping the order
+    // of update calls makes a significant difference
+    this.updatePosition(deltaTime);
+    this.updateVelocity(deltaTime);
   }
 
   select(): Body {
