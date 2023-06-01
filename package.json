@@ -63,11 +63,9 @@
     }
   },
   "dependencies": {
-    "@types/dat.gui": "^0.7.7",
     "@types/three": "^0.152.1",
     "chance": "^1.1.11",
     "fs-extra": "^11.1.1",
-    "leva": "^0.9.34",
     "lil-gui": "^0.18.1",
     "maath": "^0.6.0",
     "mathjs": "^11.8.0",

@@ -24,6 +24,8 @@ import { CameraManager } from './components/CameraManager';
 import { GUIManager } from './gui/GUIManager';
 import createGUIManager from './gui/createGUIManager';
 import { TimeManager } from './systems/TimeManager';
+import { Geometry } from './namespaces/Geometry';
+import loadPlanetPreset from './utils/loadPlanetPreset';
 
 export default class World {
   cameraManager: CameraManager;
@@ -48,10 +50,8 @@ export default class World {
     // Attach canvas to container
     container.appendChild(this.renderer.domElement);
 
-    // create cube
-    // const cube = createCube(new Color(0xf8333c)); // color: imperial red
-    // this.scene.add(cube);
-    const sphereGeometry = new SphereGeometry(1, 32, 32);
+    //const sphereGeometry = new SphereGeometry(1, 32, 32);
+    const sphereGeometry: SphereGeometry = Geometry.sphere;
     const sunMaterial = new MeshBasicMaterial({
       color: 0xfdee00, // color: Aureolin
     });
@@ -62,13 +62,14 @@ export default class World {
       mass: 1, // 1 Solar Mass
     });
     sun.name = 'Sun';
-    const earth = new Body(sphereGeometry, earthMaterial, {
-      mass: 0,
-      velocity: new Vector3(0, 0, (-30 * KM_TO_M) / DIST_MULT), // 30km/s
-    });
-    earth.name = 'Earth';
-    earth.position.set(14.95, 0, 0);
-    earth.scale.set(0.3, 0.3, 0.3);
+    // const earth = new Body(sphereGeometry, earthMaterial, {
+    //   mass: 0,
+    //   velocity: new Vector3(0, 0, (-30 * KM_TO_M) / DIST_MULT), // 30km/s
+    // });
+    // earth.name = 'Earth';
+    // earth.position.set(14.95, 0, 0);
+    // earth.scale.set(0.3, 0.3, 0.3);
+    const earth = loadPlanetPreset('Earth');
     sun.add(earth); // attach earth to sun
     this.scene.add(sun);
 
