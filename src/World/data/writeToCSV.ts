@@ -10,9 +10,7 @@ export interface dataRecord {
 
 export function writeToCSV(dataSet: dataRecord[], fileName: string) {
   const __filename = fileURLToPath(import.meta.url);
-
   const __dirname = path.dirname(__filename);
-
   const pathToNewFile = path.resolve(
     __dirname,
     path.join('recordedData', `${fileName}.csv`)
