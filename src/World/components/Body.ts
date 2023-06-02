@@ -103,8 +103,8 @@ export default class Body extends Mesh implements PointMass {
   update(deltaTime: number) {
     // Note: test whether swapping the order
     // of update calls makes a significant difference
-    this.updatePosition(deltaTime);
     this.updateVelocity(deltaTime);
+    this.updatePosition(deltaTime);
   }
 
   select(): Body {
