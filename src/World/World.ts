@@ -27,6 +27,7 @@ import { TimeManager } from './systems/TimeManager';
 import { Geometry } from './namespaces/Geometry';
 import loadPlanetPreset from './utils/loadPlanetPreset';
 import FixedTimeStep, { makeFixedUpdateFn } from './systems/FixedTimeStep';
+import { DataManager } from './systems/DataManager';
 
 export default class World {
   cameraManager: CameraManager;
@@ -37,6 +38,7 @@ export default class World {
   selectionManager: SelectionManager;
   guiManager: GUIManager;
   timeManager: TimeManager;
+  dataManager: DataManager;
   fixedUpdate: (deltaTime: number)=>void;
 
   constructor(container: HTMLElement | HTMLDivElement) {
@@ -48,6 +50,7 @@ export default class World {
     this.selectionManager = new SelectionManager();
     this.timeManager = new TimeManager();
     this.guiManager = createGUIManager(this.cameraManager, this.timeManager);
+    this.dataManager = new DataManager(true);
     this.fixedUpdate = makeFixedUpdateFn(20, (timeStep: number) => {
       // update all of the bodies in the simulation
       inOrderTraversal(this.scene.children[0] as Body, timeStep);
@@ -101,6 +104,8 @@ export default class World {
       resizeCanvas(this.renderer);
     });
     resizeCanvas(this.renderer);
+    
+    this.dataManager.track(earth);
 
     this.timeManager.unpause();
   }
@@ -115,6 +120,8 @@ export default class World {
     // update all of the bodies in the simulation
     //inOrderTraversal(this.scene.children[0] as Body, deltaTime);
     this.fixedUpdate(deltaTime);
+    const elapsedTime = this.timeManager.timeElapsed;
+    this.dataManager.collectData(elapsedTime);
 
     // render a frame
     this.renderer.render(this.scene, this.cameraManager.activeCamera);
