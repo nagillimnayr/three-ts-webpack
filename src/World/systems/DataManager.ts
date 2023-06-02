@@ -17,6 +17,7 @@ export class DataManager {
   private _updateCounter: number;
   private _data: DataRecord[];
   private _fixedStep: boolean;
+  private _maxRecords: number;
   
 
   constructor(fixedStep: boolean) {
@@ -25,6 +26,7 @@ export class DataManager {
     this._updatesPerRecord = 2400;
     this._updateCounter = 0;
     this._data = [];
+    this._maxRecords = 10;
   }
 
   track(body: Body) {
@@ -36,6 +38,9 @@ export class DataManager {
   }
 
   collectData(elapsedTime: number) {
+    if (this._data.length >= this._maxRecords) {
+      return;
+    }
     if (!this._trackedBody) {
       console.error('Tracked body is null');
       return;
@@ -50,10 +55,17 @@ export class DataManager {
         velocity: this._trackedBody.velocity,
         acceleration: this._trackedBody.acceleration,
       }
+
+      this._data.push(dataRecord);
+
+    if (this._data.length === this._maxRecords) {
+      this._logData();
+    }
+
     }
   }
 
-  logData() {
+  private _logData() {
     if (!this._trackedBody) {
       console.error('Tracked body is null');
       return;
