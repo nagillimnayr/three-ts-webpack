@@ -76,8 +76,8 @@ export class DataManager {
       dataRecords: this._data,
     }
 
-    let fileName = 'data-log-';
-    fileName += this._fixedStep ? 'fixed-' : 'unfixed-';
+    let fileName = 'data-log-' + this._trackedBody.name;
+    fileName += this._fixedStep ? '-fixed-' : '-unfixed-';
     fileName += '1';
     writeToJSON(dataLog, fileName);
   }
