@@ -48,7 +48,7 @@ export default class World {
     this.selectionManager = new SelectionManager();
     this.timeManager = new TimeManager();
     this.guiManager = createGUIManager(this.cameraManager, this.timeManager);
-    this.fixedUpdate = makeFixedUpdateFn(60, (timeStep: number) => {
+    this.fixedUpdate = makeFixedUpdateFn(20, (timeStep: number) => {
       // update all of the bodies in the simulation
       inOrderTraversal(this.scene.children[0] as Body, timeStep);
     })
