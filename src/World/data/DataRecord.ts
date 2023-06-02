@@ -1,14 +1,12 @@
 
-interface Vec3 {
+export interface Vec3 {
   x: number;
   y: number;
   z: number;
 }
 
-interface DataRecord {
-  fixedStep: boolean;
-  name: string;
-  updateIter: number;
+export interface DataRecord {
+  updateIteration: number;
   elapsedTime: number;
   position: Vec3;
   velocity: Vec3;
