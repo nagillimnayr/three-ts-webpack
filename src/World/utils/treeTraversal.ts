@@ -18,10 +18,8 @@ function inOrderTraversal(body: Body, deltaTime: number): void {
 
     // Calculate new acceleration
     orbitingBody.acceleration = calculateGravitation(orbitingBody, body);
-    // Calculate new velocity
-    orbitingBody.updateVelocity(deltaTime);
-    // Calculate new position
-    orbitingBody.updatePosition(deltaTime);
+    // Update position and velocity
+    orbitingBody.update(deltaTime);
 
     // Traverse deeper into the tree
     if (orbitingBody.children.length > 0) {

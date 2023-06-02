@@ -26,6 +26,7 @@ import createGUIManager from './gui/createGUIManager';
 import { TimeManager } from './systems/TimeManager';
 import { Geometry } from './namespaces/Geometry';
 import loadPlanetPreset from './utils/loadPlanetPreset';
+import FixedTimeStep, { makeFixedUpdateFn } from './systems/FixedTimeStep';
 
 export default class World {
   cameraManager: CameraManager;
@@ -36,6 +37,7 @@ export default class World {
   selectionManager: SelectionManager;
   guiManager: GUIManager;
   timeManager: TimeManager;
+  fixedUpdate: (deltaTime: number)=>void;
 
   constructor(container: HTMLElement | HTMLDivElement) {
     // Create components
@@ -46,6 +48,10 @@ export default class World {
     this.selectionManager = new SelectionManager();
     this.timeManager = new TimeManager();
     this.guiManager = createGUIManager(this.cameraManager, this.timeManager);
+    this.fixedUpdate = makeFixedUpdateFn(60, (timeStep: number) => {
+      // update all of the bodies in the simulation
+      inOrderTraversal(this.scene.children[0] as Body, timeStep);
+    })
 
     // Attach canvas to container
     container.appendChild(this.renderer.domElement);
@@ -107,7 +113,8 @@ export default class World {
     }
 
     // update all of the bodies in the simulation
-    inOrderTraversal(this.scene.children[0] as Body, deltaTime);
+    //inOrderTraversal(this.scene.children[0] as Body, deltaTime);
+    this.fixedUpdate(deltaTime);
 
     // render a frame
     this.renderer.render(this.scene, this.cameraManager.activeCamera);
