@@ -6,6 +6,11 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model DataRecord {
+  updateIteration Int @id @default(autoincrement())
+  elapsedTime Decimal
 }
