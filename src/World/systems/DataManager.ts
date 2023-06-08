@@ -59,7 +59,7 @@ export class DataManager {
       this._data.push(dataRecord);
 
     if (this._data.length === this._maxRecords) {
-      this._logData();
+      //this._logData();
     }
 
     }
@@ -79,7 +79,7 @@ export class DataManager {
     let fileName = 'data-log-' + this._trackedBody.name;
     fileName += this._fixedStep ? '-fixed-' : '-unfixed-';
     fileName += '1';
-    writeToJSON(dataLog, fileName);
+    //writeToJSON(dataLog, fileName);
   }
 
 }
